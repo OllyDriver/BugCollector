@@ -14,6 +14,7 @@
     button.addEventListener('click', function(e) {
         e.preventDefault();
         input.classList.toggle('active');
+        search.value.length != 0 ? submit() : {};
         if (extended) {
             search.blur()
             removeClass(input, 'focus')
@@ -21,7 +22,6 @@
             search.focus()
             addClass(input, 'focus')
         }
-        search.value.length != 0 ? submit() : {};
         extended = !extended;
     })
 
@@ -38,7 +38,7 @@
     }
 
     search.addEventListener('input', function (e) {
-        search.value.length != 0 ? input.classList.remove('focus') : input.classList.add('focus');
+        search.value.length != 0 ? removeClass(input, 'focus') : addClass(input, 'focus');
     })
 
 
