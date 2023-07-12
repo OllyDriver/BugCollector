@@ -1,0 +1,165 @@
+<div class="input-container">
+    <form>
+        <input type="text">
+        <button></button>
+    </form>
+</div>
+
+<script>
+    var input = document.querySelector('.input-container');
+    var search = document.querySelector('input')
+    var button = document.querySelector('button');
+    var extended = false;
+
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        input.classList.toggle('active');
+        if (extended) {
+            search.blur()
+            removeClass(input, 'focus')
+        } else {
+            search.focus()
+            addClass(input, 'focus')
+        }
+        search.value.length != 0 ? submit() : {};
+        extended = !extended;
+    })
+
+    function addClass(element, className) {
+        if (!element.classList.contains(className)) {
+            element.classList.add(className)
+        }
+    }
+
+    function removeClass(element, className) {
+        if (element.classList.contains(className)) {
+            element.classList.remove(className)
+        }
+    }
+
+    search.addEventListener('input', function (e) {
+        search.value.length != 0 ? input.classList.remove('focus') : input.classList.add('focus');
+    })
+
+
+    function submit() {
+        let value = search.value;
+
+        console.log(value)
+
+        search.value = '';
+    }
+    // search.addEventListener('focus', function() {
+    //     console.log("Focus 1")
+    //     input.classList.add('focus');
+    // })
+
+    // search.addEventListener('blur', function() {
+    //     console.log("Focus 2")
+    //     search.value.length != 0 ? input.classList.add('focus') : input.classList.remove('focus');
+    // })
+</script>
+
+<style>
+    .input-container {
+      position: absolute;
+
+      top: calc(50% - 32px);
+      left: calc(50% - 32px);
+
+      width: 50%;
+    }
+    
+    .input-container:before {
+      content: ' ';
+      position: absolute;
+      left: 25px;
+      top: 14px;
+      width: 2px;
+      height: 36px;
+      transform: scale(0);
+      z-index: 1;
+      background: rgb(255, 136, 135);
+      transition: all 0.5s cubic-bezier(.87, -.41, .19, 1.44);
+    }
+    
+    /* .active:before {
+      transform: scale(1);
+      transition-delay: 0.3s;
+      animation: 0.6s cubic-bezier(.87, -.41, .19, 1.44) 0.5s infinite forwards focus;
+    } */
+    
+    input {
+      border-radius: 36px;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      transition: all 0.5s cubic-bezier(.87, -.41, .19, 1.44);
+      outline: none;
+      border: white;
+      caret-color: transparent;
+    }
+    
+    .active input {
+      width: 100%;
+      padding-left: 25px;
+      border-radius: 36px;
+
+      transform: translateX(calc(-25vw + 32px));
+    }
+    
+    button {
+      background: rgba(255, 255, 255, 1);
+      position: absolute;
+      height: 100%;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      transition: all 0.5s cubic-bezier(.87, -.41, .19, 1.44);
+      border-style: none;
+    }
+    
+    button:after {
+      content: ' ';
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      margin: 0 auto;
+      background: rgb(254, 111, 117);
+      border-radius: 50%;
+    }
+    
+    button:before {
+      content: ' ';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 0;
+      right: 0;
+      top: 20px;
+      transform: scale(0);
+      transform-origin: left top;
+      margin: 0 auto;
+      background: white;
+      border-radius: 50%;
+      z-index: 1;
+      transition: all 0.8s ease;
+    }
+    
+    .active button {
+      transform: translateX(calc(25vw - 32px));
+    }
+    
+    .active button:before {
+      transform: scale(1);
+    }
+    
+    .focus:before {
+      transform: scale(0);
+      transform: translateX(calc(-25vw + 32px));
+      animation: none;
+    }
+</style>

@@ -1,0 +1,49 @@
+<div class="background">
+    <% for (var index = 1; index <= 5; index++) { %>
+        <div id="section<%= index %>" class="section"></div>
+    <% } %>
+</div>
+
+<script>
+var scrollIndex = 0;
+var previousScrollIndex = 0
+
+window.addEventListener('scroll', handleScroll);
+
+function handleScroll() {
+    const sections = document.querySelectorAll('.section');
+    const windowHeight = window.innerHeight;
+
+    sections.forEach(function(section) {
+        const sectionTop = section.getBoundingClientRect().top;
+
+        if (sectionTop < windowHeight * 0.8) {
+            section.classList.add('show');
+        } else {
+            section.classList.remove('show');
+        }
+    });
+}
+</script>
+
+<style>
+    .section {
+        height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      transition: background-color 0.5s ease;
+    }
+
+    #section1 { background-color: #333; }
+    #section2 { background-color: #666; }
+    #section3 { background-color: #999; }
+    #section4 { background-color: #ccc; }
+    #section5 { background-color: #f2f2f2; }
+
+    .show {
+      background-color: rgba(0, 0, 0, 0) !important;
+    }
+</style>
