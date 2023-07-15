@@ -1,34 +1,50 @@
 <div class="background">
-    <% for (var index = 1; index <= 5; index++) { %>
+    <% for (var index = 0; index < 5; index++) { %>
         <div id="section<%= index %>" class="section"></div>
     <% } %>
 </div>
 
 <script>
-var scrollIndex = 0;
-var previousScrollIndex = 0
+let scrollIndex = 0;
+let previousScrollIndex = 0
 
 window.addEventListener('scroll', handleScroll);
 
-function handleScroll() {
+function handleScroll(e) {
+    e.preventDefault();
+
     const sections = document.querySelectorAll('.section');
     const windowHeight = window.innerHeight;
+    const scrollIndex = window.scrollY;
 
-    sections.forEach(function(section) {
-        const sectionTop = section.getBoundingClientRect().top;
+    previousScrollIndex += scrollIndex;
 
-        if (sectionTop < windowHeight * 0.8) {
-            section.classList.add('show');
-        } else {
-            section.classList.remove('show');
-        }
+    if (previousScrollIndex > 500) {
+        previousScrollIndex = 0
+    }
+
+    if (previousScrollIndex < 0) {
+        previousScrollIndex = 500;
+    }
+
+    let sectionToShow = Math.floor(previousScrollIndex / 100);
+
+    console.log(sectionToShow)
+
+    sections.forEach(function(section, index) {
+        let position = index - sectionToShow
+        section.style.zIndex = 5 - Math.abs(position);
     });
 }
 </script>
 
 <style>
     .section {
-        height: 100vh;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -37,13 +53,9 @@ function handleScroll() {
       transition: background-color 0.5s ease;
     }
 
-    #section1 { background-color: #333; }
-    #section2 { background-color: #666; }
-    #section3 { background-color: #999; }
-    #section4 { background-color: #ccc; }
-    #section5 { background-color: #f2f2f2; }
-
-    .show {
-      background-color: rgba(0, 0, 0, 0) !important;
-    }
+    #section1 { background-color: rgb(71, 136, 135); }
+    #section2 { background-color: rgb(72, 188, 165); }
+    #section3 { background-color: rgb(84, 206, 151); }
+    #section4 { background-color: rgb(80, 196, 71); }
+    #section5 { background-color: rgb(138, 215, 74); }
 </style>
